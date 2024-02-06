@@ -19,29 +19,41 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
-@Table(name="doctor")
+@Table(name = "doctor")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class Doctor extends BaseEntity{
+@ToString
+public class Doctor extends User {
 
-	@Column(name="doctor_name",length = 200)
+	@Column(name = "doctor_name", length = 200)
 	private String dName;
-	
-	@Column(name="doctor_contact",length =100 )
+
+	@Column(name = "doctor_contact", length = 100)
 	private String dContactNo;
-	
-	@Column(name="doctor_specialisation",length = 400)
+
+	@Column(name = "doctor_specialisation", length = 400)
 	private String dSpecialisation;
+
+//	@Column(name="doctor_schedule")
+//	@ElementCollection
+//	@CollectionTable(name ="doctor_schedule",joinColumns = @JoinColumn())
+//	@OneToMany(fetch = FetchType.EAGER)
+//	private List<DoctorSchedule> dSchedule = new ArrayList<DoctorSchedule>() ;
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name="doctor_schedule")
+	private List<DoctorSchedule> dSchedule = new ArrayList<>();
+
+	public void addDSchedule(List<DoctorSchedule> listd) {
+		
+		this.dSchedule.addAll(listd);
 	
 
-	@ElementCollection
-	@CollectionTable(name ="doctor_schedule",joinColumns = @JoinColumn())
-	private List<DoctorSchedule> dSchedule = new ArrayList<DoctorSchedule>() ;
-	
-//	@OneToMany(mappedBy ="doctor",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.EAGER)
-//	private List<Appointment> appointmentList = new ArrayList<Appointment>();
+	}
+
 }

@@ -18,6 +18,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "patient")
@@ -25,7 +26,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Patient extends BaseEntity {
+@ToString()
+
+public class Patient extends User {
 	
 	@Column(name="patient_name",length = 100)
 	private String pName;
@@ -41,11 +44,5 @@ public class Patient extends BaseEntity {
 	
 	@Column(name="patient_bloodgroup",length = 10)
 	private String pBloodGroup;	
-	
-	@OneToOne
-	@JoinColumn(name="patient_id")
-	private User user;
-	
-//	@OneToMany(mappedBy ="patient",cascade = CascadeType.ALL,orphanRemoval = true)
-//	private List<Appointment> appointmentList = new ArrayList<Appointment>();
+
 }
